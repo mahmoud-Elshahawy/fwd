@@ -2,13 +2,14 @@ import { useState } from "react"
 import {Link} from "react-router-dom"
 import BooksList from "./BooksList"
 import * as BooksAPI from "./BooksAPI"
-let Search = () =>{
+let Search = ({onChange}) =>{
     let [books,setbooks]=useState([]);
     let query = (query) => {
-       let result = (BooksAPI.search(query))
-       setbooks(result)
-       console.log(result)
+       BooksAPI.search(query).then((results)=> {
+        setbooks(results)
+       })
     }
+    let searchupdate= (book,shelf)=>{onChange(book,shelf)}
     return (
         <div className="search-books">
           <div className="search-books-bar">
@@ -27,7 +28,7 @@ let Search = () =>{
             </div>
           </div>
           <div className="search-books-results">
-            <BooksList books={books}/>
+            <BooksList books={books} shelfChange={searchupdate}/>
           </div>
         </div>
     )

@@ -1,12 +1,11 @@
-import { useState } from "react";
 import ShelfChanger from "./ShelfChanger"
 let Books = ({books,shelf,shelfselect}) => {
-    let [myBooks,setmyBooks] = useState([]);
+    let myBooks=[];
     if(shelf){
     let myshelf = shelf.replace(/ /g, "");
     myBooks=(books.filter(b => b.shelf.toLowerCase() === myshelf.toLowerCase()))}
     else{
-       //console.log(books)
+    myBooks=books;
     }
     let selection = (book,value) => (shelfselect(book,value));
     return (

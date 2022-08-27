@@ -17,14 +17,24 @@ function App() {
   },
   [])
   let onChange = (book,newShelf) => {
-    BooksAPI.update(book,newShelf)
-    books.find(b => b.title===book.title).shelf=newShelf
-    setUpdate(!update);
+    if(books.find(b => b.id === book.id)){
+      BooksAPI.update(book,newShelf)
+      books.find(b => b.title===book.title).shelf=newShelf
+      setUpdate(!update);
+    }
+    else{
+      BooksAPI.update(book,newShelf);
+      let getBooks = async () => {
+        let result = await BooksAPI.getAll();
+        setbooks(result);
+      }
+      getBooks()
+    }
   }
   return (
     <Routes>
       <Route exact path="/" element={<Shelf books={books} shelfs={shelfs} onChange={onChange}/>} />
-      <Route exact path="/search" element={<Search />} />
+      <Route exact path="/search" element={<Search onChange={onChange}/>} />
     </Routes>
     
   );
