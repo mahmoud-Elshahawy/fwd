@@ -2,12 +2,20 @@ import { useState } from "react"
 import {Link} from "react-router-dom"
 import BooksList from "./BooksList"
 import * as BooksAPI from "./BooksAPI"
-let Search = ({onChange}) =>{
+let Search = ({onChange,myBooks}) =>{
     let [books,setbooks]=useState([]);
     let query = (query) => {
+        if(query==="")
+        setbooks([]);
+        else{
        BooksAPI.search(query).then((results)=> {
+        myBooks.forEach(element => {
+          if(results.find(r => r.id ===element.id)){
+            results.find(b => b.title===element.title).shelf=element.shelf
+          }
+        });
         setbooks(results)
-       })
+       })}
     }
     let searchupdate= (book,shelf)=>{onChange(book,shelf)}
     return (

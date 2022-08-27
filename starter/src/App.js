@@ -34,7 +34,7 @@ function App() {
   return (
     <Routes>
       <Route exact path="/" element={<Shelf books={books} shelfs={shelfs} onChange={onChange}/>} />
-      <Route exact path="/search" element={<Search onChange={onChange}/>} />
+      <Route exact path="/search" element={<Search onChange={onChange} myBooks={books}/>} />
     </Routes>
     
   );
