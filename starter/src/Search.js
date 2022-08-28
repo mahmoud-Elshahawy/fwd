@@ -9,6 +9,8 @@ let Search = ({onChange,myBooks}) =>{
         setbooks([]);
         else{
        BooksAPI.search(query).then((results)=> {
+        if(results.error)
+        return setbooks([]);
         myBooks.forEach(element => {
           if(results.find(r => r.id ===element.id)){
             results.find(b => b.title===element.title).shelf=element.shelf
